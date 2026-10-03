@@ -1,0 +1,109 @@
+Rakshit & Co. Johuree - Beginner Guide
+
+This guide explains:
+1. How to run the app locally.
+2. How to test the main features.
+
+----------------------------------------
+1) How To Run The App
+----------------------------------------
+
+You have two local apps:
+
+- Billing workspace: `http://127.0.0.1:5000`
+- Master portal: `http://127.0.0.1:5051`
+
+Best way to start both apps:
+
+1. Open a terminal.
+2. Go to the project folder:
+
+```bash
+cd /mnt/g/gold_business_app/jewellery_store_app
+```
+
+3. Run both apps together:
+
+```bash
+./start_local_apps.sh
+```
+
+If you want to run them separately:
+
+1. Open one terminal for billing:
+
+```bash
+cd /mnt/g/gold_business_app/jewellery_store_app/bill_gen_frontend
+python3 app.py
+```
+
+2. Open another terminal for the master portal:
+
+```bash
+cd /mnt/g/gold_business_app/jewellery_store_app/master_portal
+python3 app.py
+```
+
+3. Keep both terminals open while testing.
+
+Browser links:
+
+- Billing workspace: `http://127.0.0.1:5000`
+- Master portal: `http://127.0.0.1:5051`
+
+----------------------------------------
+2) What To Test
+----------------------------------------
+
+Test the master portal first:
+
+1. Open `http://127.0.0.1:5051`
+2. Check the dashboard counts.
+3. Create a new customer.
+4. Create a stock item.
+5. Create an order.
+6. Create or update a reminder in Notifications.
+7. Confirm it appears in the reminders area.
+8. Refresh the dashboard and confirm reminder counts update.
+
+Test the billing workspace next:
+
+1. Open `http://127.0.0.1:5000`
+2. Fill a sample invoice.
+3. Fill customer details.
+4. Add one or more items.
+5. Refresh the preview.
+6. Generate the PDF.
+7. Check that the invoice or receipt is saved.
+8. Check that the portal shows the new document data after refresh.
+
+----------------------------------------
+3) Troubleshooting
+----------------------------------------
+
+If a page does not open:
+
+- Make sure the app is running in the terminal.
+- Check that you are using the correct URL.
+
+If the billing app does not generate PDFs:
+
+- Make sure Chrome or Chromium is installed.
+- Make sure the PDF generation path is working on your machine.
+
+If the portal shows fallback data:
+
+- Check whether Supabase is reachable.
+- Check whether the database tables exist.
+- Refresh the portal after a few seconds.
+
+----------------------------------------
+4) Simple Daily Routine
+----------------------------------------
+
+1. Start both apps.
+2. Open the master portal.
+3. Add customers, stock, and orders.
+4. Use the billing workspace for invoices and receipts.
+5. Use Notifications for reminders and follow-up tracking.
+6. Refresh the dashboard to see live totals.

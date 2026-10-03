@@ -1,0 +1,10 @@
+# This project currently uses only Python standard library modules.
+# There are no pip-installable runtime dependencies at this time.
+#
+# System requirement:
+# - A local Chrome/Chromium-compatible browser binary is required for PDF generation.
+#   Expected executable names include:
+#   - google-chrome
+#   - chromium
+#   - chromium-browser
+#   - microsoft-edge

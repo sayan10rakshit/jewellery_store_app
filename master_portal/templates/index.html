@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rakshit &amp; Co. Johuree Master Portal</title>
+    <meta name="description" content="Operational cockpit for billing records, stock movement, order flow, payments, documents, and reminders.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+    <div class="app-shell" id="app-shell">
+        <aside class="sidebar" id="sidebar">
+            <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Toggle sidebar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <div class="brand-card">
+                <span class="brand-mark">R&amp;CJ</span>
+                <div class="brand-text">
+                    <p class="brand-kicker">Rakshit &amp; Co. Johuree</p>
+                    <h1>Master Portal</h1>
+                </div>
+            </div>
+
+            <nav class="nav-list" id="main-nav">
+                <button class="nav-item active" data-section="dashboard">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                    <span class="nav-label">Dashboard</span>
+                </button>
+                <button class="nav-item" data-section="orderbook-hub">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+                    <span class="nav-label">Orderbook</span>
+                </button>
+                <button class="nav-item" data-section="billing-hub">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <span class="nav-label">Billing Hub</span>
+                </button>
+            </nav>
+            <div id="dynamic-nav"></div>
+
+            <div class="sidebar-footer">
+                <p>Local data control room. Every schema area can be searched, viewed, created, edited, and deleted.</p>
+                <a class="portal-link" href="http://127.0.0.1:5000" target="_blank" rel="noreferrer">Open Billing Workspace →</a>
+            </div>
+        </aside>
+
+        <main class="main-panel">
+            <header class="hero">
+                <div>
+                    <p class="eyebrow">Operational Cockpit</p>
+                    <h2>One searchable workspace for billing, stock, orders, payments, documents &amp; reminders.</h2>
+                </div>
+                <div class="hero-actions">
+                    <button id="refresh-all" class="secondary-action" type="button">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                        Refresh
+                    </button>
+                    <a class="primary-action" href="http://127.0.0.1:5000#invoice" target="_blank" rel="noreferrer">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Create Invoice
+                    </a>
+                </div>
+            </header>
+
+            <section class="page-section active" data-section-panel="dashboard">
+                <section class="metric-grid" id="metric-grid"></section>
+
+                <section class="content-grid">
+                    <article class="panel-card panel-wide">
+                        <div class="panel-heading">
+                            <div>
+                                <p class="panel-kicker">Operations Snapshot</p>
+                                <h3>Pulse and recent movement</h3>
+                            </div>
+                            <span class="status-pill" id="supabase-status">Checking Supabase</span>
+                        </div>
+                        <div class="insight-grid">
+                            <div class="insight-tile">
+                                <span class="label">Collections Today</span>
+                                <strong id="sales-total">Rs. 0.00</strong>
+                                <small>Based on invoices generated today</small>
+                            </div>
+                            <div class="insight-tile">
+                                <span class="label">Receivables</span>
+                                <strong id="receivables-total">Rs. 0.00</strong>
+                                <small>Open invoice balances</small>
+                            </div>
+                            <div class="insight-tile">
+                                <span class="label">Open Reminders</span>
+                                <strong id="notifications-total">0</strong>
+                                <small>Customer and artisan follow-up notifications</small>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="panel-card">
+                        <div class="panel-heading">
+                            <div>
+                                <p class="panel-kicker">Quick Workflows</p>
+                                <h3>Jump straight into any register</h3>
+                            </div>
+                        </div>
+                        <div class="action-stack" id="quick-actions"></div>
+                    </article>
+                </section>
+
+                <section class="content-grid dense">
+                    <article class="panel-card panel-wide">
+                        <div class="panel-heading">
+                            <div>
+                                <p class="panel-kicker">Recent Customers</p>
+                                <h3>Customer book activity</h3>
+                            </div>
+                        </div>
+                        <div class="table-shell" id="dashboard-customers"></div>
+                    </article>
+
+                    <article class="panel-card panel-wide">
+                        <div class="panel-heading">
+                            <div>
+                                <p class="panel-kicker">Recent Stock</p>
+                                <h3>Latest stockbook changes</h3>
+                            </div>
+                        </div>
+                        <div class="table-shell" id="dashboard-stock"></div>
+                    </article>
+
+                    <article class="panel-card panel-wide">
+                        <div class="panel-heading">
+                            <div>
+                                <p class="panel-kicker">Recent Orders</p>
+                                <h3>Current orderbook</h3>
+                            </div>
+                        </div>
+                        <div class="table-shell" id="dashboard-orders"></div>
+                    </article>
+
+                    <article class="panel-card panel-wide">
+                        <div class="panel-heading">
+                            <div>
+                                <p class="panel-kicker">Latest Documents</p>
+                                <h3>Invoices and receipts</h3>
+                            </div>
+                        </div>
+                        <div class="table-shell" id="dashboard-documents"></div>
+                    </article>
+
+                    <article class="panel-card panel-wide">
+                        <div class="panel-heading">
+                            <div>
+                                <p class="panel-kicker">Upcoming Notifications</p>
+                                <h3>Reminder calendar queue</h3>
+                            </div>
+                        </div>
+                        <div class="table-shell" id="dashboard-notifications"></div>
+                    </article>
+                </section>
+            </section>
+
+            <section class="page-section" data-section-panel="orderbook-hub" id="orderbook-hub"></section>
+            <section class="page-section" data-section-panel="billing-hub" id="billing-hub"></section>
+            <div id="entity-sections"></div>
+        </main>
+    </div>
+
+    <!-- Record Detail Drawer -->
+    <aside id="record-drawer" class="record-drawer" aria-hidden="true">
+        <div class="drawer-backdrop" data-close-drawer></div>
+        <div class="drawer-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="panel-kicker" id="drawer-kicker">Record Detail</p>
+                    <h3 id="drawer-title">Inspect record</h3>
+                </div>
+                <button type="button" class="ghost-action" data-close-drawer>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    Close
+                </button>
+            </div>
+            <div class="drawer-actions">
+                <button type="button" class="secondary-action compact-action" id="drawer-edit">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+                    Edit
+                </button>
+                <button type="button" class="ghost-action" id="drawer-delete" style="color: var(--danger);">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                    Delete
+                </button>
+            </div>
+            <div class="drawer-body" id="drawer-body"></div>
+        </div>
+    </aside>
+
+    <!-- Form Drawer (Create / Edit) -->
+    <aside id="form-drawer" class="form-drawer" aria-hidden="true">
+        <div class="drawer-backdrop" data-close-form-drawer></div>
+        <div class="drawer-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="panel-kicker" id="form-drawer-kicker">Record</p>
+                    <h3 id="form-drawer-title">Create record</h3>
+                </div>
+                <button type="button" class="ghost-action" data-close-form-drawer>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    Close
+                </button>
+            </div>
+            <div id="form-drawer-body" class="drawer-body"></div>
+        </div>
+    </aside>
+
+    <!-- App Modal (reusable for detail, create, delete-confirm) -->
+    <div id="app-modal" class="app-modal" aria-hidden="true">
+        <div class="app-modal-backdrop" data-close-modal></div>
+        <div class="app-modal-container" id="app-modal-container">
+            <div class="app-modal-header" id="app-modal-header"></div>
+            <div class="app-modal-body" id="app-modal-body"></div>
+            <div class="app-modal-footer" id="app-modal-footer"></div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <div id="floating-notification-stack" class="floating-notification-stack"></div>
+    <script src="/static/app.js"></script>
+</body>
+</html>
